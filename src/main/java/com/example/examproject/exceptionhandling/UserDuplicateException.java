@@ -1,4 +1,4 @@
-package com.example.examproject.ExceptionHandling;
+package com.example.examproject.exceptionhandling;
 
 public class UserDuplicateException extends RuntimeException {
 

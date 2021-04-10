@@ -1,6 +1,6 @@
 package com.example.examproject.security.service.impl;
 
-import com.example.examproject.ExceptionHandling.UserDuplicateException;
+import com.example.examproject.exceptionhandling.UserDuplicateException;
 import com.example.examproject.security.dao.RoleMapper;
 import com.example.examproject.security.dao.UserMapper;
 import com.example.examproject.security.model.LoginRequestDTO;
