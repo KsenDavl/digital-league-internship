@@ -1,0 +1,15 @@
+syntax="proto3";
+
+package com.example;
+
+message GetMessageRequest {
+  string message = 1;
+}
+
+message GetMessageResponse {
+
+}
+
+service MessageServer {
+  rpc getMessage(GetMessageRequest) returns (GetMessageResponse);
+}

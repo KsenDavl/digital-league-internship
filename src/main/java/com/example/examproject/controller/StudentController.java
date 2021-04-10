@@ -1,8 +1,8 @@
 package com.example.examproject.controller;
 
 import com.example.examproject.service.api.StudentService;
-import dto.StudentDto;
-import dto.TeacherDto;
+import com.example.examproject.dto.StudentDto;
+import com.example.examproject.dto.TeacherDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;

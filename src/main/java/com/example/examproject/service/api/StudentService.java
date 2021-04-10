@@ -1,9 +1,7 @@
 package com.example.examproject.service.api;
 
-import com.example.examproject.entity.Student;
-import com.example.examproject.entity.Teacher;
-import dto.StudentDto;
-import dto.TeacherDto;
+import com.example.examproject.dto.StudentDto;
+import com.example.examproject.dto.TeacherDto;
 
 import java.util.List;
 
