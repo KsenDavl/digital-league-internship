@@ -18,9 +18,9 @@ public class JmsConsumer implements MessageListener {
     public void onMessage(Message message) {
         try {
             String text = ((ActiveMQTextMessage)message).getText();
-            log.info("Received message : " + text);
+            log.info("Полученное сообщение : " + text);
         } catch (JMSException e) {
-            throw new RuntimeException("");
+            throw new RuntimeException("Ошибка при получении сообщения");
         }
     }
 }

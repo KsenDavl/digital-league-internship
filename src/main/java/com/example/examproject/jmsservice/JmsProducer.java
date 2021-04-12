@@ -1,19 +1,17 @@
 package com.example.examproject.jmsservice;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.Map;
-
+@Slf4j
 @Component
 public class JmsProducer {
 
     private final JmsTemplate jmsTemplate;
 
-    private Map<String, Integer> methodsCount = new HashMap<>();
     private int getMethods = 0;
     private int postMethods = 0;
     private int putMethods = 0;
@@ -46,8 +44,8 @@ public class JmsProducer {
 
         try{
             jmsTemplate.convertAndSend(queueName, message);
-        } catch(Exception e){
-            throw new RuntimeException("Received Exception during send Message: ", e);
+        } catch(Exception e) {
+            log.error("Ошибка при отправке сообщения", e);
         }
     }
 }

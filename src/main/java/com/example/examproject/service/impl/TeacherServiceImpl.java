@@ -3,6 +3,7 @@ package com.example.examproject.service.impl;
 import com.example.examproject.dao.TeacherMapper;
 import com.example.examproject.entity.Student;
 import com.example.examproject.entity.Teacher;
+import com.example.examproject.exceptionhandling.TeacherNotFoundException;
 import com.example.examproject.grpcclient.GrpcClientService;
 import com.example.examproject.jmsservice.JmsProducer;
 import com.example.examproject.service.api.TeacherService;
@@ -15,6 +16,10 @@ import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+/**
+ * Сервис для работы с учителями
+ */
 
 @Service
 public class TeacherServiceImpl implements TeacherService {
@@ -44,7 +49,8 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public TeacherDto getTeacherById(int id) {
-        Teacher teacher = teacherMapper.getTeacherById(id);
+        Teacher teacher = teacherMapper.getTeacherById(id).orElseThrow(
+                () -> new TeacherNotFoundException(String.format("Учителя с идентификатором = %d не существует", id)));
         grpcClientService.sendMessageToServer(String.format("Получена сущность учителя по идентификатору = %d", id));
         jmsProducer.sendMessage(QUEUE_NAME, HttpMethod.GET);
         return modelMapper.map(teacher, TeacherDto.class);
@@ -62,6 +68,9 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public TeacherDto updateTeacher(TeacherDto teacherDto) {
+        teacherMapper.getTeacherById(teacherDto.getTeacherId()).orElseThrow(
+                () -> new TeacherNotFoundException(String.format
+                        ("Учителя с идентификатором = %d не существует", teacherDto.getTeacherId())));
         Teacher teacher = modelMapper.map(teacherDto, Teacher.class);
         teacherMapper.updateTeacher(teacher);
         grpcClientService.sendMessageToServer(String.format
@@ -72,6 +81,8 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public void deleteTeacherById(int id) {
+        teacherMapper.getTeacherById(id).orElseThrow(
+                () -> new TeacherNotFoundException(String.format("Учителя с идентификатором = %d не существует", id)));
         deleteTeacherFromAllStudents(id);
         grpcClientService.sendMessageToServer(String.format("Удалена сущность учителя с идентификатором = %d", id));
         jmsProducer.sendMessage(QUEUE_NAME, HttpMethod.DELETE);
@@ -80,6 +91,8 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public List<StudentDto> getStudentsByTeacherId(int id) {
+        teacherMapper.getTeacherById(id).orElseThrow(
+                () -> new TeacherNotFoundException(String.format("Учителя с идентификатором = %d не существует", id)));
         List<Student> entities = teacherMapper.getStudentsByTeacherId(id);
         grpcClientService.sendMessageToServer(String.format
                 ("Получен список студентов учителя с идентификатором = %d", id));
@@ -89,6 +102,8 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public void deleteTeacherFromAllStudents(int id) {
+        teacherMapper.getTeacherById(id).orElseThrow(
+                () -> new TeacherNotFoundException(String.format("Учителя с идентификатором = %d не существует", id)));
         grpcClientService.sendMessageToServer(String.format("Удалены все связи студентов и учителя с идентификатором = %d", id));
         jmsProducer.sendMessage(QUEUE_NAME, HttpMethod.GET);
         teacherMapper.deleteTeacherFromAllStudents(id);

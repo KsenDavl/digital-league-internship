@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Класс - конфигурация работы со Swagger.
+ * Конфигурация работы со Swagger.
  */
 
 @Configuration

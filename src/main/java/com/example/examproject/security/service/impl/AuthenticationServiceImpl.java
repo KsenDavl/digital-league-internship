@@ -24,10 +24,10 @@ import java.util.Set;
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
 
-    private UserMapper userMapper;
-    private PasswordEncoder passwordEncoder;
-    private AuthenticationManager authenticationManager;
-    private RoleMapper roleMapper;
+    private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
+    private final RoleMapper roleMapper;
 
     @Autowired
     public AuthenticationServiceImpl(UserMapper userMapper, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, RoleMapper roleMapper) {

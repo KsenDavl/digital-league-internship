@@ -14,12 +14,6 @@ import java.util.Set;
 @Repository
 public interface UserMapper {
 
-    @Select("select user_id, username, password  from users")
-    List<User> getAllUsers();
-
-    @Select("select user_id, username, password  from users where user_id = #{userId}")
-    User getUserById(int userId);
-
     @Insert("insert into users values (#{userId}, #{username}, #{password})")
     @SelectKey(keyProperty = "userId", before = true, resultType = Integer.class,
             statement = "select nextval('user_id_seq')")
@@ -27,12 +21,6 @@ public interface UserMapper {
 
     @Insert("insert into users_roles values (#{userId}, #{roleId})")
     void addRoleToUser(int userId, int roleId);
-
-    @Update("update users set username = #{username}, password = #{password} where user_id = #{userId}")
-    void updateUser(User user);
-
-    @Delete("delete from users where user_id = #{userId}")
-    void deleteUser(int userId);
 
     @Select("SELECT a.user_id, a.username, a.password, r.role_id, r.role_name " +
             "FROM users a join users_roles ur on a.user_id = ur.user_id " +

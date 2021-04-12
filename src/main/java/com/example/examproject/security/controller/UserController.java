@@ -2,6 +2,7 @@ package com.example.examproject.security.controller;
 
 import com.example.examproject.exceptionhandling.UserDuplicateDto;
 import com.example.examproject.exceptionhandling.UserDuplicateException;
+import com.example.examproject.security.dao.UserMapper;
 import com.example.examproject.security.model.LoginRequestDTO;
 import com.example.examproject.security.model.RegistrationRequestDTO;
 import com.example.examproject.security.model.User;

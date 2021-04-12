@@ -1,11 +1,15 @@
 package com.example.examproject.controller;
 
+import com.example.examproject.exceptionhandling.StudentNotFoundDto;
+import com.example.examproject.exceptionhandling.StudentNotFoundException;
 import com.example.examproject.service.api.StudentService;
 import com.example.examproject.dto.StudentDto;
 import com.example.examproject.dto.TeacherDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -64,9 +68,16 @@ public class StudentController {
         studentService.addStudentToTeacher(studentId, teacherId);
     }
 
-    @GetMapping("/get_teachers_by/{id}")
+    @GetMapping("/{id}/teachers")
     @Operation(summary = "Получение всех учителей студента по идентификатору студента")
     public List<TeacherDto> getTeachersByStudentId(@PathVariable int id) {
         return studentService.getTeachersByStudentId(id);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<StudentNotFoundDto> handleException (StudentNotFoundException exception) {
+        StudentNotFoundDto dto = new StudentNotFoundDto();
+        dto.setInfo(exception.getMessage());
+        return new ResponseEntity<>(dto, HttpStatus.NOT_FOUND);
     }
 }

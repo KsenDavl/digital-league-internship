@@ -7,6 +7,9 @@ import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.core.JmsTemplate;
 
 import javax.jms.ConnectionFactory;
+/**
+ * Конфигурация для работы с ActiveMQ
+ */
 
 @Configuration
 public class ActiveMQConfig {

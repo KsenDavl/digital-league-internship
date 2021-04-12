@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Mapper
@@ -16,7 +17,7 @@ public interface StudentMapper {
     List<Student> getAllStudents();
 
     @Select("select * from students where student_id = #{id}")
-    Student getStudentById(int id);
+    Optional<Student> getStudentById(int id);
 
     @Insert("insert into students values (#{studentId}, #{name}, #{specialty}, #{year})")
     @SelectKey(keyProperty = "studentId", before = true, resultType = Integer.class,
